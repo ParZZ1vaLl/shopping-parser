@@ -13,6 +13,7 @@
 //! - **currency_amount** - matches an amount with an optional decimal part.
 //! - **currency** - supported currencies: `UAH`, `USD`, `EUR`.
 //! - **unit** - supported units: `kg`, `l`, `ml`, `pcs`, `g`.
+//! - **name** - represents the name of a product, consisting of alphabetic characters and allowing multiple words separated by spaces.
 //! - **product** - matches a single product entry with all properties.
 //! - **products** - matches a list of products, each separated by a blank line.
 //! - **shopping_item** - matches a single shopping item in the format `<name> <quantity> <unit>`.
@@ -65,10 +66,10 @@ impl Product {
             match field.as_rule() {
                 Rule::product_name => {
                     product_name = field
-                        .as_str()
-                        .replace("Product name:", "")
-                        .trim()
-                        .to_string();
+                        .into_inner()
+                        .find(|inner| inner.as_rule() == Rule::name)
+                        .map(|name| name.as_str().to_string())
+                        .unwrap_or_default();
                 }
                 Rule::category => {
                     category = field.as_str().replace("Category:", "").trim().to_string();
@@ -151,36 +152,41 @@ pub fn parse_shopping_list(input: &str) -> Result<Vec<ShoppingItem>, anyhow::Err
     let mut items = Vec::new();
 
     for pair in pairs {
-        if let Rule::shopping_item = pair.as_rule() {
-            let mut product_name = String::new();
-            let mut quantity = 0.0;
-            let mut unit = String::new();
+        match pair.as_rule() {
+            Rule::shopping_item => {
+                let mut product_name = String::new();
+                let mut quantity = 0.0;
+                let mut unit = String::new();
 
-            for field in pair.into_inner() {
-                match field.as_rule() {
-                    Rule::product_name => {
-                        product_name = field.as_str().to_string();
+                for field in pair.into_inner() {
+                    match field.as_rule() {
+                        Rule::name => {
+                            product_name = field.as_str().to_string();
+                        }
+                        Rule::currency_amount => {
+                            quantity = field.as_str().parse::<f64>().unwrap_or(0.0);
+                        }
+                        Rule::unit => {
+                            unit = field.as_str().to_string();
+                        }
+                        _ => {}
                     }
-                    Rule::currency_amount => {
-                        quantity = field.as_str().parse::<f64>().unwrap_or(0.0);
-                    }
-                    Rule::unit => {
-                        unit = field.as_str().to_string();
-                    }
-                    _ => {}
                 }
-            }
 
-            items.push(ShoppingItem {
-                product_name,
-                quantity,
-                unit,
-            });
+                items.push(ShoppingItem {
+                    product_name,
+                    quantity,
+                    unit,
+                });
+            }
+            _ => {}
         }
     }
 
     Ok(items)
 }
+
+
 
 pub fn parse_products_file(file_path: &str) -> Result<Vec<Product>, anyhow::Error> {
     let content = fs::read_to_string(file_path)?;
@@ -217,3 +223,4 @@ pub fn load_products_from_json(input_path: &str) -> Result<Vec<Product>, io::Err
     let products: Vec<Product> = serde_json::from_str(&data)?;
     Ok(products)
 }
+

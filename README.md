@@ -86,7 +86,7 @@ Total price: 40.00 UAH
 ## Grammar overview
 ```
 // WHITESPACE - matches spaces or tabs.
-WHITESPACE = _{ " " | "\t" }
+WHITESPACE = { " " | "\t" }
 
 // currency - represents supported currencies: "UAH", "USD", and "EUR".
 currency = { "UAH" | "USD" | "EUR" }
@@ -94,8 +94,11 @@ currency = { "UAH" | "USD" | "EUR" }
 // unit - defines supported measurement units: "kg", "l", "ml", "pcs", "g".
 unit = { "kg" | "l" | "ml" | "pcs" | "g" }
 
+// name - represents the name of a product, consisting of alphabetic characters and allowing multiple words separated by spaces.
+name = { ASCII_ALPHA+ ~ (WHITESPACE+ ~ ASCII_ALPHA+)* }
+
 // product_name - matches the product name in the format "Product name: <name>".
-product_name = { "Product name:" ~ WHITESPACE* ~ ASCII_ALPHANUMERIC+ ~ (WHITESPACE ~ ASCII_ALPHANUMERIC+)* }
+product_name = { ("Product name:" ~ WHITESPACE*)? ~ name }
 
 // category - matches the product category in the format "Category: <category>".
 category = { "Category:" ~ WHITESPACE* ~ ASCII_ALPHANUMERIC+ }
@@ -120,20 +123,20 @@ currency_amount = { ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
 
 // product - defines a complete product entry with all fields: name, category, price, calories, proteins, carbohydrates, fats.
 product = {
-product_name ~ NEWLINE ~
-category ~ NEWLINE ~
-price ~ NEWLINE ~
-calories ~ NEWLINE ~
-proteins ~ NEWLINE ~
-carbohydrates ~ NEWLINE ~
-fats
+    product_name ~ NEWLINE ~
+    category ~ NEWLINE ~
+    price ~ NEWLINE ~
+    calories ~ NEWLINE ~
+    proteins ~ NEWLINE ~
+    carbohydrates ~ NEWLINE ~
+    fats
 }
 
 // products - represents a list of products, where each product entry is separated by a blank line.
 products = { product ~ (NEWLINE ~ NEWLINE ~ product)+ ~ NEWLINE* }
 
 // shopping_item - represents a single item in the shopping list, following the format "<name> <quantity> <unit>".
-shopping_item = { product_name ~ WHITESPACE+ ~ currency_amount ~ WHITESPACE+ ~ unit }
+shopping_item = { name ~ WHITESPACE+ ~ currency_amount ~ WHITESPACE+ ~ unit }
 
 // shopping_list - represents a shopping list with multiple items, separated by commas.
 shopping_list = { shopping_item ~ (WHITESPACE* ~ "," ~ WHITESPACE* ~ shopping_item)* }
