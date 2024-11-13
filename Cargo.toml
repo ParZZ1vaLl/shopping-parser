@@ -2,7 +2,7 @@
 name = "shopping-parser"
 version = "0.1.0"
 authors = ["Oleksandr Durdynets <o.durdynets@ukma.edu.ua>"]
-description = "A console application to parse and structure shopping lists by categories and measurement units."
+description = "A Rust-based parser for parsing structured product information and shopping lists, supporting multiple currencies and units."
 edition = "2021"
 
 readme = "README.md"
@@ -14,6 +14,6 @@ categories = ["text-processing", "command-line-utilities"]
 anyhow = "1.0.93"
 pest = "2.7.14"
 pest_derive = "2.7.14"
-regex = "1"
 thiserror = "1.0.68"
-
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

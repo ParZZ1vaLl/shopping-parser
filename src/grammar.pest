@@ -1,0 +1,52 @@
+// WHITESPACE - matches spaces or tabs.
+WHITESPACE = _{ " " | "\t" }
+
+// currency - represents supported currencies: "UAH", "USD", and "EUR".
+currency = { "UAH" | "USD" | "EUR" }
+
+// unit - defines supported measurement units: "kg", "l", "ml", "pcs", "g".
+unit = { "kg" | "l" | "ml" | "pcs" | "g" }
+
+// product_name - matches the product name in the format "Product name: <name>".
+product_name = { "Product name:" ~ WHITESPACE* ~ ASCII_ALPHANUMERIC+ ~ (WHITESPACE ~ ASCII_ALPHANUMERIC+)* }
+
+// category - matches the product category in the format "Category: <category>".
+category = { "Category:" ~ WHITESPACE* ~ ASCII_ALPHANUMERIC+ }
+
+// price - matches the product price in the format "Price: <amount> <currency>/<unit>".
+price = { "Price:" ~ WHITESPACE* ~ currency_amount ~ WHITESPACE* ~ currency ~ "/" ~ unit }
+
+// calories - matches the calorie content in the format "Calories: <calories> cal".
+calories = { "Calories:" ~ WHITESPACE* ~ ASCII_DIGIT+ ~ WHITESPACE* ~ "cal" }
+
+// proteins - matches the protein content in grams in the format "Proteins: <amount> g".
+proteins = { "Proteins:" ~ WHITESPACE* ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? ~ WHITESPACE* ~ "g" }
+
+// carbohydrates - matches the carbohydrate content in grams in the format "Carbohydrates: <amount> g".
+carbohydrates = { "Carbohydrates:" ~ WHITESPACE* ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? ~ WHITESPACE* ~ "g" }
+
+// fats - matches the fat content in grams in the format "Fats: <amount> g".
+fats = { "Fats:" ~ WHITESPACE* ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? ~ WHITESPACE* ~ "g" }
+
+// currency_amount - represents a numeric value with an optional decimal part.
+currency_amount = { ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
+
+// product - defines a complete product entry with all fields: name, category, price, calories, proteins, carbohydrates, fats.
+product = {
+    product_name ~ NEWLINE ~
+    category ~ NEWLINE ~
+    price ~ NEWLINE ~
+    calories ~ NEWLINE ~
+    proteins ~ NEWLINE ~
+    carbohydrates ~ NEWLINE ~
+    fats
+}
+
+// products - represents a list of products, where each product entry is separated by a blank line.
+products = { product ~ (NEWLINE ~ NEWLINE ~ product)+ ~ NEWLINE* }
+
+// shopping_item - represents a single item in the shopping list, following the format "<name> <quantity> <unit>".
+shopping_item = { product_name ~ WHITESPACE+ ~ currency_amount ~ WHITESPACE+ ~ unit }
+
+// shopping_list - represents a shopping list with multiple items, separated by commas.
+shopping_list = { shopping_item ~ (WHITESPACE* ~ "," ~ WHITESPACE* ~ shopping_item)* }

@@ -1,0 +1,95 @@
+Product name: apple
+Category: fruit
+Price: 15 UAH/kg
+Calories: 52 cal
+Proteins: 0.4 g
+Carbohydrates: 9.42 g
+Fats: 0.2 g
+
+Product name: milk
+Category: dairy
+Price: 13.0 UAH/l
+Calories: 42 cal
+Proteins: 3.6 g
+Carbohydrates: 4.8 g
+Fats: 3.6 g
+
+Product name: chicken
+Category: meat
+Price: 40 UAH/kg
+Calories: 239 cal
+Proteins: 25.0 g
+Carbohydrates: 0 g
+Fats: 7.0 g
+
+Product name: beef
+Category: meat
+Price: 150 UAH/kg
+Calories: 250 cal
+Proteins: 26.1 g
+Carbohydrates: 0 g
+Fats: 15.0 g
+
+Product name: banana
+Category: fruit
+Price: 12 UAH/kg
+Calories: 96 cal
+Proteins: 1.3 g
+Carbohydrates: 22.8 g
+Fats: 0.3 g
+
+Product name: broccoli
+Category: vegetable
+Price: 25 UAH/kg
+Calories: 34 cal
+Proteins: 2.8 g
+Carbohydrates: 6.6 g
+Fats: 0.4 g
+
+Product name: yogurt
+Category: dairy
+Price: 20 UAH/l
+Calories: 59 cal
+Proteins: 3.5 g
+Carbohydrates: 4.7 g
+Fats: 3.3 g
+
+Product name: salmon
+Category: fish
+Price: 200 UAH/kg
+Calories: 208 cal
+Proteins: 20.4 g
+Carbohydrates: 0 g
+Fats: 13.0 g
+
+Product name: rice
+Category: grain
+Price: 30 UAH/kg
+Calories: 130 cal
+Proteins: 2.7 g
+Carbohydrates: 28.0 g
+Fats: 0.3 g
+
+Product name: cheese
+Category: dairy
+Price: 120 UAH/kg
+Calories: 402 cal
+Proteins: 25.0 g
+Carbohydrates: 1.3 g
+Fats: 33.0 g
+
+Product name: egg
+Category: poultry
+Price: 5 UAH/pcs
+Calories: 155 cal
+Proteins: 13.0 g
+Carbohydrates: 1.1 g
+Fats: 11.0 g
+
+Product name: avocado
+Category: fruit
+Price: 60 UAH/pcs
+Calories: 160 cal
+Proteins: 2.0 g
+Carbohydrates: 8.5 g
+Fats: 15.0 g
