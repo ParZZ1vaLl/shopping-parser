@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Oleksandr Durdynets <o.durdynets@ukma.edu.ua>"]
 description = "A Rust-based parser for parsing structured product information and shopping lists, supporting multiple currencies and units."
 edition = "2021"
+license = "MIT"
 
 readme = "README.md"
 repository = "https://github.com/ParZZ1vaLl/shopping-parser"
