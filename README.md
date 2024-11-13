@@ -1,6 +1,7 @@
 # Shopping Parser
 
 ## https://crates.io/crates/shopping-parser 
+## https://docs.rs/shopping-parser/latest/shopping_parser/
 
 ## Project Overview
 
